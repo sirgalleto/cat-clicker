@@ -107,6 +107,18 @@
         init: function() {
             this.adminContainer = document.getElementById('adminContainer');
             this.adminButton = document.getElementById('adminButton');
+            this.title = document.createElement('input');
+            this.imageUrl = document.createElement('input');
+            this.counts = document.createElement('input');
+            this.cancel = document.createElement('button');
+            this.submit = document.createElement('button');
+            this.title.setAttribute('type', 'text');
+            this.imageUrl.setAttribute('type', 'url');
+            this.counts.setAttribute('type', 'text');
+            this.cancel.setAttribute('type', 'button');
+            this.submit.setAttribute('type', 'submit');
+            this.cancel.textContent = 'Cancel';
+            this.submit.textContent = 'Submit';
 
             this.render();
         },
@@ -119,26 +131,11 @@
             var cat = octopus.getCurrentCat();
             var form = document.createElement('form');
 
-            this.title = document.createElement('input');
-            this.title.setAttribute('type', 'text');
             this.title.setAttribute('value', cat.name);
-
-            this.imageUrl = document.createElement('input');
-            this.imageUrl.setAttribute('type', 'url');
             this.imageUrl.setAttribute('value', cat.img);
-
-            this.counts = document.createElement('input');
-            this.counts.setAttribute('type', 'text');
             this.counts.setAttribute('value', cat.counts);
 
-            this.cancel = document.createElement('button');
-            this.cancel.setAttribute('type', 'button');
             this.cancel.addEventListener('click', () => this.removeChilds());
-            this.cancel.textContent = 'Cancel';
-
-            this.submit = document.createElement('button');
-            this.submit.setAttribute('type', 'submit');
-            this.submit.textContent = 'Submit';
 
             form.appendChild(this.title);
             form.appendChild(this.imageUrl);
