@@ -82,21 +82,22 @@
     var catView = {
         init: function() {
             this.catContainer = document.getElementById('catContainer');
+            this.title = document.getElementById('title');
+            this.image = document.getElementById('catImage');
+
             this.render();
         },
         render: function() {
             var cat = octopus.getCurrentCat();
 
-            var title = document.getElementById('title');
-            title.textContent = cat.name;
+            this.title.textContent = cat.name;
 
-            var image = document.getElementById('catImage');
-            image.src = cat.img;
+            this.image.src = cat.img;
 
             this.counts = document.getElementById('counter');
             this.counts.textContent = cat.counts;
 
-            image.addEventListener('click', octopus.onClick);
+            this.image.addEventListener('click', octopus.onClick);
         },
         renderCounts: function(counts) {
             this.counts.textContent = counts;
@@ -105,13 +106,17 @@
 
     var adminView = {
         init: function() {
+            // Get DOM reference
             this.adminContainer = document.getElementById('adminContainer');
             this.adminButton = document.getElementById('adminButton');
             this.title = document.createElement('input');
+            // Create form elements
+            this.form = document.createElement('form');
             this.imageUrl = document.createElement('input');
             this.counts = document.createElement('input');
             this.cancel = document.createElement('button');
             this.submit = document.createElement('button');
+            // Set form elements value
             this.title.setAttribute('type', 'text');
             this.imageUrl.setAttribute('type', 'url');
             this.counts.setAttribute('type', 'text');
@@ -119,32 +124,32 @@
             this.submit.setAttribute('type', 'submit');
             this.cancel.textContent = 'Cancel';
             this.submit.textContent = 'Submit';
+            // Add elements to form
+            this.form.appendChild(this.title);
+            this.form.appendChild(this.imageUrl);
+            this.form.appendChild(this.counts);
+            this.form.appendChild(this.cancel);
+            this.form.appendChild(this.submit);
 
-            this.render();
+            // Add on click event render the values of the current cat
+            this.adminButton.addEventListener('click', () => this.render());
+
+            // Add listener to cancel button
+            this.cancel.addEventListener('click', () => this.removeChilds());
+
+            // Add submit listener to form
+            this.form.addEventListener('submit', (event) => this.onSubmit(event));
+
         },
         render: function() {
-            this.adminButton.addEventListener('click', () => {
-                this.renderForm();
-            });
-        },
-        renderForm: function() {
             var cat = octopus.getCurrentCat();
-            var form = document.createElement('form');
 
+            //Add current cat values
             this.title.setAttribute('value', cat.name);
             this.imageUrl.setAttribute('value', cat.img);
             this.counts.setAttribute('value', cat.counts);
 
-            this.cancel.addEventListener('click', () => this.removeChilds());
-
-            form.appendChild(this.title);
-            form.appendChild(this.imageUrl);
-            form.appendChild(this.counts);
-            form.appendChild(this.cancel);
-            form.appendChild(this.submit);
-            form.addEventListener('submit', (event) => this.onSubmit(event));
-
-            this.adminContainer.appendChild(form);
+            this.adminContainer.appendChild(this.form);
         },
         removeChilds: function() {
             while(this.adminContainer.firstChild) {
