@@ -130,13 +130,10 @@
             this.form.appendChild(this.counts);
             this.form.appendChild(this.cancel);
             this.form.appendChild(this.submit);
-
             // Add on click event render the values of the current cat
             this.adminButton.addEventListener('click', () => this.render());
-
             // Add listener to cancel button
             this.cancel.addEventListener('click', () => this.removeChilds());
-
             // Add submit listener to form
             this.form.addEventListener('submit', (event) => this.onSubmit(event));
 
@@ -148,7 +145,7 @@
             this.title.setAttribute('value', cat.name);
             this.imageUrl.setAttribute('value', cat.img);
             this.counts.setAttribute('value', cat.counts);
-
+            //Render it into admin
             this.adminContainer.appendChild(this.form);
         },
         removeChilds: function() {
